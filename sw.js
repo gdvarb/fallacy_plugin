@@ -3,12 +3,16 @@ console.log("hello from sw.js")
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'textSelected') {
     const highlightedText = request.text;
-    console.log("Received message from:", sender.tab ? sender.tab.url : "the extension");
-    // Perform action here ...
-    console.log("highlighted text:", highlightedText);
-    model_response = getModelResponse(highlightedText)
 
-    sendResponse({status: "success", message: "Action performed"});
+    console.log("Received message from:", sender.tab ? sender.tab.url : "the extension");
+    console.log("highlighted text:", highlightedText);
+
+    //model_response = getModelResponse(highlightedText)
+    getModelResponse(highlightedText).then(model_response => {
+      chrome.storage.local.set({analysysResult: model_response})
+      sendResponse({status: "success", message: "Action performed"});
+    });
+    return true;
   }
 });
 
