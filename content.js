@@ -28,8 +28,8 @@ document.addEventListener("keyup", (event) => {
   const selected_text = getSelectedText();
   if (selected_text) {
     console.log("Text highlighted after key release:", selected_text);
-  }
-});
+    chrome.runtime.sendMessage({action: 'textSelected', text: selected_text});
+  }});
 
 
 document.addEventListener("selectionchange", () => {
