@@ -8,9 +8,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("highlighted text:", highlightedText);
 
     //model_response = getModelResponse(highlightedText)
+    chrome.storage.local.set({status: "loading", analysysResult: null});
     getModelResponse(highlightedText).then(model_response => {
-      chrome.storage.local.set({analysysResult: model_response})
-      sendResponse({status: "success", message: "Action performed"});
+      chrome.storage.local.set({status: "complete", analysysResult: model_response})
+      sendResponse({status: "success", message: "Analysis saved"});
     });
     return true;
   }

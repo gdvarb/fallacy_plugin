@@ -1,22 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   
   const displayElement = document.getElementById('analysisParagraph');
-
-  chrome.storage.local.get(["analysisResult"]).then((result) => {
+  
+  // ask for both status and analysisResult
+  chrome.storage.local.get(['status', 'analysisResult'], (result) => {
     const analysis = result.analysisResult;
-    console.log("Value is:", analysis);
+    const status = result.status
 
-    if (analysis){
-
+    if (status === "loading"){
+      displayElement.innerHTML = '<strong>Analysis In Progress...</strong>';
+    } else if (status === 'complete' && analysis){
       const formattedHtml = `
         <strong>Fallacy Detected:</strong> ${analysis.fallacy}<br>
         <strong>Confidence:</strong> ${Math.round(analysis.confidence * 100)}<br>
         <strong>Explanation:</strong> ${analysis.explanation}
       `;
-      displayElement.textContent = formattedHtml;
+      displayElement.innerHTML = formattedHtml;
+
     } else {
-      const formattedHtml = `<strong>Analysis In Progress...</strong>`
-      displayElement.textContent = formattedHtml;
+      displayElement.textContent = "Highlight text on any page to analyze it.";
     }
   });
 });
