@@ -8,9 +8,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("highlighted text:", highlightedText);
 
     //model_response = getModelResponse(highlightedText)
-    chrome.storage.local.set({status: "loading", analysysResult: null});
+    chrome.storage.local.set({status: "loading", analysisResult: null});
     getModelResponse(highlightedText).then(model_response => {
-      chrome.storage.local.set({status: "complete", analysysResult: model_response})
+      chrome.storage.local.set({status: "complete", analysisResult: model_response})
       sendResponse({status: "success", message: "Analysis saved"});
     });
     return true;
@@ -33,7 +33,8 @@ async function getModelResponse(text) {
   return result;
 
   } catch (error) {
-    console.error(error.message);
+    console.error("Analysis Failed:", error.message);
+    chrome.storage.local.set({status: "error", analysisResult: null})
   }
   
 }

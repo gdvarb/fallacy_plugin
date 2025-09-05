@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (status === "loading"){
       displayElement.innerHTML = '<strong>Analysis In Progress...</strong>';
+    } else if (status === "error"){
+      displayElement.innerHTML= "<strong>Sorry, an error has occurred.</strong>";
     } else if (status === 'complete' && analysis){
       const formattedHtml = `
         <strong>Fallacy Detected:</strong> ${analysis.fallacy}<br>
@@ -16,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <strong>Explanation:</strong> ${analysis.explanation}
       `;
       displayElement.innerHTML = formattedHtml;
-
     } else {
       displayElement.textContent = "Highlight text on any page to analyze it.";
     }
