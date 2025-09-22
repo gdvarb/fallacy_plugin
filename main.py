@@ -27,3 +27,8 @@ async def analyze_text(item: TextItem):
     result = model(item.highlighted_text)
     analysis_data = result[0]
     return {"analysis": analysis_data["label"], "confidence": analysis_data["score"]}
+
+
+@app.get("/")
+async def root():
+    return {"message": "This is the fallacy detection API"}

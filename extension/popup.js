@@ -13,9 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
       displayElement.innerHTML = "<strong>Sorry, an error has occurred.</strong>";
     } else if (status === 'complete' && analysis) {
       const formattedHtml = `
-        <strong>Fallacy Detected:</strong> ${analysis.fallacy}<br>
-        <strong>Confidence:</strong> ${Math.round(analysis.confidence * 100)}<br>
-        <strong>Explanation:</strong> ${analysis.explanation}
+        <strong>Fallacy Detected:</strong> ${analysis.analysis}<br>
+        <strong>Confidence:</strong> ${Math.round(analysis.confidence * 100)}%
       `;
       displayElement.innerHTML = formattedHtml;
     } else {
