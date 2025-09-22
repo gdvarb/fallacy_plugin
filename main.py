@@ -25,4 +25,5 @@ async def analyze_text(item: TextItem):
     print(f"Recieved highlighted text: {recieved_text}")
     model = model_cache["fallacy_detector"]
     result = model(item.highlighted_text)
-    return {"analysis": result}
+    analysis_data = result[0]
+    return {"analysis": analysis_data["label"], "confidence": analysis_data["score"]}

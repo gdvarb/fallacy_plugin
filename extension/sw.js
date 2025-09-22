@@ -18,11 +18,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function getModelResponse(text) {
-  const url = "need to add";
+  const url = "http://127.0.0.1:8000/analyze";
 
   try {
     const response = await fetch(url, {
       method: "POST",
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({highlighted_text: text})
     });
   if (!response.ok) {
